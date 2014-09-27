@@ -7,14 +7,14 @@ function [ coords,D ] = prepareDataSet( choice )
         load fifteenCityDistMat
         Y = cmdscale(fifteenCityDistMat);
         coords=Y(:,1:2);
-        scatter(coords(:,1),coords(:,2));
+        %scatter(coords(:,1),coords(:,2));
         D=fifteenCityDistMat;
     else
-        load fifySevenCityDistMat
+        load fiftySevenCityDistMat
         Y = cmdscale(fiftySevenCityDistMat);
         coords=Y(:,1:2);
-        scatter(coords(:,1),coords(:,2));
-        D=fifySevenCityDistMat;
+        %scatter(coords(:,1),coords(:,2));
+        D=fiftySevenCityDistMat;
     end
 end
 

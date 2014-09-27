@@ -1,18 +1,26 @@
 %this is the runner function of travelling salesman problem using hill
 %climbing
-
+%written by Chao Fang
 rng(1);
 %choice==1-fifteen cities
 %choice==2-fifty seven cities
-[coords,D]=prepareDataSet(1);
+[coords,D]=prepareDataSet(2);
 cityID=1:size(coords,1);
-disp('initial string of city ID with their coords:')
-disp(s)
-
 
 %start with any tour, e.g in input order
 %assign cityID to each coordinates
 s=[cityID', coords];
+
+
+%disp('initial string of city ID with their coords:')
+%disp(s)
+
+figure;
+subplot(2,2,1);
+plot(s(:,2),s(:,3));
+title('initial routine')
+xlabel('x-axis')
+ylabel('y-axis')
 
 %record initial tour as best so far
 minCost=cost(s,D);
@@ -41,13 +49,18 @@ while (num_evaluations<max_evaluations+1)
     num_evaluations=num_evaluations+1;
     
 end
-disp('after # of iteration:')
-disp(num_evaluations-1);
-
+%disp('after # of iteration:')
+%disp(num_evaluations-1);
+subplot(2,2,2)
 plot(1:max_evaluations,minCostArray,'Color',[0,0.7,0.9])
 title('Iteration vs Cost Plot')
 xlabel('Iteration')
 ylabel('Cost value')
 
-disp('final string of city ID with their coords:')
-disp(s)
+% disp('final string of city ID with their coords:')
+% disp(s)
+subplot(2,2,3);
+plot(s(:,2),s(:,3));
+title('final routine')
+xlabel('x-axis')
+ylabel('y-axis')
