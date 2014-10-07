@@ -1,7 +1,7 @@
 function [ s_next,start,k ] = getNextState( s,totalCityNum )
 %random get the next state
 %written by Chao Fang
-    k=randi(totalCityNum-1);
+    k=max(randi(totalCityNum-1),2);
     
     index=1:totalCityNum+1;
     start=1+randi(size(s,1)-2-k+1,1,1);

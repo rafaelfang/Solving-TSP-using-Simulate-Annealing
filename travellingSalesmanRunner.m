@@ -33,14 +33,15 @@ minCost=cost(s,D);
 minTour=s;
 candidateNum=3;
 
-T=9999;
-beta=0.99;
-
+T=0.14;
+beta=0.997;
+tempThreshold=0.1;
 num_evaluations=1;
 minCostArray=zeros(max_evaluations,1);
 outputArr=zeros(max_evaluations,2);
-
-while (num_evaluations<max_evaluations+1)
+temperatureArr=zeros(max_evaluations,1);
+while (num_evaluations<max_evaluations+1&&T>tempThreshold)
+    
     candidate=zeros(size(s,1),size(s,2),candidateNum);
     candidateCost=zeros(1,candidateNum);
     candidateStartPos=zeros(1,candidateNum);
@@ -65,6 +66,7 @@ while (num_evaluations<max_evaluations+1)
         s=s_next;
     end
     T=newTemperature(T,beta);
+    temperatureArr(num_evaluations,1)=T;
     outputArr(num_evaluations,1)=minCandidateStartPos;
     outputArr(num_evaluations,2)=minCandidateStringLength;
     minCostArray(num_evaluations,1)=minCost;
@@ -84,5 +86,11 @@ ylabel('Cost value')
 subplot(2,2,3);
 plot(s(:,2),s(:,3));
 title('final routine')
+xlabel('x-axis')
+ylabel('y-axis')
+
+subplot(2,2,4);
+plot(temperatureArr);
+title('Temperature')
 xlabel('x-axis')
 ylabel('y-axis')
