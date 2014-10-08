@@ -20,7 +20,7 @@ s=[s;s(1,:)];
 
 %disp('initial string of city ID with their coords:')
 %disp(s)
-max_evaluations=5000;
+max_evaluations=100;
 figure;
 subplot(2,2,1);
 plot(s(:,2),s(:,3));
@@ -36,7 +36,7 @@ candidateNum=3;
 %T=0.14;
 T=9999;
 % beta=0.997;
-beta=0.99;
+beta=0.5;
 %tempThreshold=0.1;
 num_evaluations=1;
 minCostArray=zeros(max_evaluations,1);
@@ -63,18 +63,30 @@ while (num_evaluations<max_evaluations+1)
             minCost=cost(s_next,D);
             minTour=s_next;
         end
+        disp ('================')
+        disp ('start position')
+        disp (minCandidateStartPos)
+        disp ('sequence length')
+        disp (minCandidateStringLength)
+        disp (strcat('state',int2str(num_evaluations)));
+        disp (s)
+        disp ('================')
+        outputArr(num_evaluations,:)=[minCandidateStartPos,minCandidateStringLength];
+    
     elseif (expCoinFlip(s,s_next,D,T)==1)
         s=s_next;
+        disp ('================')
+        disp ('start position')
+        disp (minCandidateStartPos)
+        disp ('sequence length')
+        disp (minCandidateStringLength)
+        disp (strcat('state',int2str(num_evaluations)));
+        disp (s)
+        disp ('================')
+        outputArr(num_evaluations,:)=[minCandidateStartPos,minCandidateStringLength];
+    
     end
-    outputArr(num_evaluations,:)=[minCandidateStartPos,minCandidateStringLength];
-%     disp ('================')
-%     disp ('start position')
-%     disp (minCandidateStartPos)
-%     disp ('sequence length')
-%     disp (minCandidateStringLength)
-%     disp (strcat('state',int2str(num_evaluations)));
-%     disp (s)
-%     disp ('================')
+    
     T=newTemperature(T,beta);
     temperatureArr(num_evaluations,1)=T;
     minCostArray(num_evaluations,1)=minCost;
