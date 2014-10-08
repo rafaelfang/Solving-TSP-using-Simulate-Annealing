@@ -33,14 +33,16 @@ minCost=cost(s,D);
 minTour=s;
 candidateNum=3;
 
-T=0.14;
-beta=0.997;
-tempThreshold=0.1;
+%T=0.14;
+T=9999;
+% beta=0.997;
+beta=0.99;
+%tempThreshold=0.1;
 num_evaluations=1;
 minCostArray=zeros(max_evaluations,1);
 outputArr=zeros(max_evaluations,2);
 temperatureArr=zeros(max_evaluations,1);
-while (num_evaluations<max_evaluations+1&&T>tempThreshold)
+while (num_evaluations<max_evaluations+1)
     
     candidate=zeros(size(s,1),size(s,2),candidateNum);
     candidateCost=zeros(1,candidateNum);
@@ -60,15 +62,21 @@ while (num_evaluations<max_evaluations+1&&T>tempThreshold)
         if cost(s_next,D)<minCost
             minCost=cost(s_next,D);
             minTour=s_next;
-        
         end
     elseif (expCoinFlip(s,s_next,D,T)==1)
         s=s_next;
     end
+    outputArr(num_evaluations,:)=[minCandidateStartPos,minCandidateStringLength];
+%     disp ('================')
+%     disp ('start position')
+%     disp (minCandidateStartPos)
+%     disp ('sequence length')
+%     disp (minCandidateStringLength)
+%     disp (strcat('state',int2str(num_evaluations)));
+%     disp (s)
+%     disp ('================')
     T=newTemperature(T,beta);
     temperatureArr(num_evaluations,1)=T;
-    outputArr(num_evaluations,1)=minCandidateStartPos;
-    outputArr(num_evaluations,2)=minCandidateStringLength;
     minCostArray(num_evaluations,1)=minCost;
     num_evaluations=num_evaluations+1;
     
@@ -85,7 +93,7 @@ ylabel('Cost value')
 % disp(s)
 subplot(2,2,3);
 plot(s(:,2),s(:,3));
-title('final routine')
+title(strcat('final routine with min cost',int2str(min(minCostArray))));
 xlabel('x-axis')
 ylabel('y-axis')
 
